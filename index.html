@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BEST PRINT PORTAL</title>
+  <style>
+    body {font-family: sans-serif; background: #0f172a; color: #e2e8f0; margin:0; padding:20px;}
+    header {display:flex;justify-content:space-between;align-items:center;}
+    .logo {font-size:24px; font-weight:700; color:#06b6d4;}
+    nav a {margin:0 10px; text-decoration:none; color:#94a3b8;}
+    nav a:hover {color:#06b6d4;}
+    .container {max-width:800px;margin:20px auto;}
+    .card {background:#1e293b;padding:20px;border-radius:10px;margin-bottom:20px;}
+    button {background:#06b6d4;color:#021;padding:8px 14px;border:none;border-radius:8px;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BEST PRINT PORTAL</div>
+    <nav>
+      <a href="#services">सेवाएं</a>
+      <a href="#about">हमारे बारे में</a>
+      <a href="#contact">संपर्क करें</a>
+    </nav>
+  </header>
+  <div class="container">
+    <section class="card">
+      <h2>स्वागत है!</h2>
+      <p>यह एक डेमो प्रिंट पोर्टल है जहाँ आप लॉगिन कर सकते हैं और संपर्क फॉर्म भर सकते हैं।</p>
+      <form id="loginForm">
+        <input type="text" id="email" placeholder="ईमेल" required>
+        <input type="password" id="password" placeholder="पासवर्ड" required>
+        <button type="submit">लॉगिन</button>
+      </form>
+    </section>
+    <section class="card">
+      <h2>संपर्क करें</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="नाम" required>
+        <input type="email" id="cemail" placeholder="ईमेल" required>
+        <textarea id="message" placeholder="संदेश" rows="4" required></textarea>
+        <button type="submit">भेजें</button>
+      </form>
+    </section>
+  </div>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const res = await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+      const data = await res.json();
+      alert(data.message);
+    });
+    document.getElementById("contactForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("cemail").value;
+      const message = document.getElementById("message").value;
+      const res = await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,message})});
+      const data = await res.json();
+      alert(data.message);
+    });
+  </script>
+</body>
+</html>
